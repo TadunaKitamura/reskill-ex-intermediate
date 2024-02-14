@@ -29,11 +29,10 @@ public class HotelController {
     }
 
     @PostMapping("/search")
-    public List<Hotel> search(@RequestParam("price") Integer price, Model model) {
+    public List<Hotel> search(@RequestParam("price") String price, Model model) {
 
         List<Hotel> hotelList = hotelService.searchByLessThanPrice(price);
         model.addAttribute("hotelList", hotelList);
-
         return hotelList;
 
     }

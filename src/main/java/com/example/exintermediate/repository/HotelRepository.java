@@ -34,33 +34,57 @@ public class HotelRepository {
 
     /**
      * 入力金額以下のホテルを検索するメソッド.
+     * 
      * @param price
      * @return
      */
-    public List<Hotel> searchByLessThanPrice(Integer price){
+    public List<Hotel> searchByLessThanPrice(Integer price) {
 
         String SERACH_PRICE_QUERY = """
-                
-            SELECT 
-                id
-                ,area_name
-                ,hotel_name
-                ,address
-                ,nearest_station
-                ,price
-                ,parking
-            FROM
-                hotels
-            WHERE 
-                price <= :price;
-                """;
+
+                SELECT
+                    id
+                    ,area_name
+                    ,hotel_name
+                    ,address
+                    ,nearest_station
+                    ,price
+                    ,parking
+                FROM
+                    hotels
+                WHERE
+                    price <= :price;
+                    """;
 
         SqlParameterSource sqlParameterSource = new MapSqlParameterSource()
-        .addValue("price", price);
-        
+                .addValue("price", price);
+
         List<Hotel> hotelList = template.query(SERACH_PRICE_QUERY, sqlParameterSource, H_ROW_MAPPER);
 
         return hotelList;
+    }
+
+    public List<Hotel> findAll() {
+
+        String FIND_ALL_QUERY = """
+
+                SELECT
+                    id
+                    ,area_name
+                    ,hotel_name
+                    ,address
+                    ,nearest_station
+                    ,price
+                    ,parking
+                FROM
+                    hotels;
+
+                        """;
+
+        List<Hotel> hotelList = template.query(FIND_ALL_QUERY, H_ROW_MAPPER);
+
+        return hotelList;
+
     }
 
 }

@@ -12,15 +12,24 @@ import com.example.exintermediate.repository.HotelRepository;
 @Service
 @Transactional
 public class HotelService {
-    
 
     @Autowired
     private HotelRepository hotelRepository;
 
-    public List<Hotel> searchByLessThanPrice(Integer price){
+    public List<Hotel> searchByLessThanPrice(String price) {
 
-        List<Hotel> hotelList = hotelRepository.searchByLessThanPrice(price);
+        if ("".equals(price)) {
 
-        return hotelList;
+            List<Hotel> hotelList = hotelRepository.findAll();
+
+            return hotelList;
+
+        } else {
+            List<Hotel> hotelList = hotelRepository.searchByLessThanPrice(Integer.parseInt(price));
+
+            return hotelList;
+
+        }
+
     }
 }
